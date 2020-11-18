@@ -292,18 +292,20 @@ public class JsonTest extends BaseTest {
 
                     case NUMBER:
                         String numberStr = in.nextString();
-                        if (numberStr.contains(".")
-                                || numberStr.contains("e")
-                                || numberStr.contains("E")) {
-                            return Double.parseDouble(numberStr);
-                        } else {
-                            try {
-                                Long l = Long.parseLong(numberStr);
-                                return l;
-                            } catch (NumberFormatException e) {
-                                return Double.parseDouble(numberStr);
-                            }
-                        }
+//                        if (numberStr.contains(".")
+//                                || numberStr.contains("e")
+//                                || numberStr.contains("E")) {
+//                            return Double.parseDouble(numberStr);
+//                        } else {
+//                            try {
+//                                Long l = Long.parseLong(numberStr);
+//                                return l;
+//                            } catch (NumberFormatException e) {
+//                                return Double.parseDouble(numberStr);
+//                            }
+//                        }
+
+                        return numberStr;
 
                     case BOOLEAN:
                         return in.nextBoolean();
@@ -339,6 +341,15 @@ public class JsonTest extends BaseTest {
         System.out.println(generateJsonStr);
     }
 
+    @Test
+    public void mapOfErrorType(){
+        String json = "{\"stringType\":T153606169766T}";
+        Gson gson = new Gson();
+        Map<String, Object> map = gson.fromJson(json, Map.class);
+        System.out.println(map);
+        Object o = map.get("stringType");
+        assertTrue( o instanceof  String);
+    }
 
     public static class SampleData {
         public List<Data> datas;
